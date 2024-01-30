@@ -1,10 +1,16 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require_once 'vendor/autoload.php';
 require_once "createOrders.php";
 require_once "createProducts.php";
 require_once __DIR__ ."/classes/order.php";
 require_once __DIR__ ."/classes/product.php";
 require_once __DIR__ ."/classes/report.php";
+
 
 
 $orders = createOrders();
@@ -28,7 +34,6 @@ foreach ($products as $product)
             }
 
             $report[$count]->totalQuant += $order->getQuantity();
-            print_r($report[$count]->totalQuant);
         }
 
     }
@@ -47,9 +52,26 @@ foreach ($report as $linha)
 }
 fclose($reportCSV);
 
-print_r($orders);
+$email = new PHPMailer(true);
+try {
+    $email->isSMTP();
+    $email->Host = "smtp.example.com";
+    $email->SMTPAuth = true;
+    $email->Username = 'smtp_username';
+    $email->Password = 'smtp_password';
+
+    $email->SetFrom('from@example.com', 'Arthur');
+    $email->Subject   = 'Desafio 2 - Atividade 1';
+    $email->Body   = 'Teste';
+    $email->AddAddress( 'arthurbrixiusdacosta2@gmail.com' );
+    $email->AddAttachment( __DIR__."/report.csv");
+
+    $email->Send();
+    echo "\n";
+} catch (Exception $e) {
+    echo "Message could not be sent. Mailer Error: {$email->ErrorInfo}";
+}
 
 
 
 
-    

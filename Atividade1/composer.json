@@ -1,0 +1,17 @@
+{
+    "name": "arthur/atividade1",
+    "description": "composer desafios2 atividade1",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Arthur\\Atividade1\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Arthur"
+        }
+    ]
+}

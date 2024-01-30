@@ -5,7 +5,7 @@ function createProducts(): array
     $productsCSV = fopen("products.csv", "r");
 
     $count=0;
-    while (($products = fgetcsv($productsCSV, ",")) !== FALSE) {
+    while (($products = fgetcsv($productsCSV, 1000, ",")) !== FALSE) {
         
         for ($Linha=0; $Linha < count($products); $Linha++) {
             $productsArray[$count][$Linha] = $products[$Linha];    

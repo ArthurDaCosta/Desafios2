@@ -5,7 +5,7 @@ function createOrders(): array
     $ordersCSV = fopen("orders.csv", "r");
 
     $count=0;
-    while (($orders = fgetcsv($ordersCSV, ",")) !== FALSE) {
+    while (($orders = fgetcsv($ordersCSV, 1000, ",")) !== FALSE) {
         
         for ($Linha=0; $Linha < count($orders); $Linha++) {
             $ordersArray[$count][$Linha] = $orders[$Linha];    
