@@ -55,21 +55,22 @@ fclose($reportCSV);
 $email = new PHPMailer(true);
 try {
     $email->isSMTP();
-    $email->Host = "smtp.example.com";
+    $email->Host = 'sandbox.smtp.mailtrap.io';
     $email->SMTPAuth = true;
-    $email->Username = 'smtp_username';
-    $email->Password = 'smtp_password';
+    $email->Port = 2525;
+    $email->Username = '7dba6e0582d7e2';
+    $email->Password = '54502c2c6aa609';
 
     $email->SetFrom('from@example.com', 'Arthur');
     $email->Subject   = 'Desafio 2 - Atividade 1';
-    $email->Body   = 'Teste';
-    $email->AddAddress( 'arthurbrixiusdacosta2@gmail.com' );
+    $email->Body   = 'Arquivo CSV em anexo.';
+    $email->AddAddress( 'AddAddress@example.com' );
     $email->AddAttachment( __DIR__."/report.csv");
 
     $email->Send();
     echo "\n";
 } catch (Exception $e) {
-    echo "Message could not be sent. Mailer Error: {$email->ErrorInfo}";
+    echo "Message could not be sent. Mailer Error: {$email->ErrorInfo} \n";
 }
 
 
