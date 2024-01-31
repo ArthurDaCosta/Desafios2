@@ -3,26 +3,63 @@
 require_once __DIR__."/classes/funcionario.php";
 require_once __DIR__."/classes/database.php";
 
-$database = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres");
-$query = "SELECT * FROM funcionarios";
-$result = pg_query($database, $query);
+$database = new database();
+$database->createTable();
 
-$funcionario1 = new funcionario(20, "João", "Masculino", 25, 2000);
-$funcionario2 = new funcionario(21, "Maria", "Feminino", 28, 6000);
-$funcionario3 = new funcionario(22, "Carlos", "Masculino", 22, 1000);
-$funcionario4 = new funcionario(23, "João", "Masculino", 56, 40000);
+//Criar Funcionarios
+$funcionarios = [ 
+    new funcionario(20, "Funcionario 1", "Masculino", 25, 2000),
+    new funcionario(21, "Funcionario 2", "Feminino", 28, 6000),
+    new funcionario(22, "Funcionario 3", "Masculino", 22, 1000),
+    new funcionario(23, "Funcionario 4", "Masculino", 56, 40000)
+];
 
-$array = [21, "Maria", "Feminino", 28, 6000];
-
-pg_insert($database, 'funcionarios', $funcionario2->toArray());
-pg_send_query($database, "DELETE FROM funcionarios WHERE id = $funcionario2->id");
-
-while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-    echo "\t<tr>\n";
-    foreach ($line as $col_value) {
-        echo "\t\t<td>$col_value</td>\n";
-    }
-    echo "\t</tr>\n";
+//Adicionar Funcionarios ao banco
+foreach ($funcionarios as $funcionario) {
+    $funcionario->Create($database);
 }
-echo "</table>\n";
+
+//Alterar Funcionarios
+foreach ($funcionarios as $funcionario) {
+    $funcionario->nome = "$funcionario->nome alterado";
+    $funcionario->AumentarSalario(10);
+    $funcionario->Update($database);
+}
+$database->orderBy('funcionarios', 'id');
+
+//Print Funcionarios
+$database->printDB('funcionarios');
+
+//Unset Funcionario
+$idSave = $funcionarios[0]->id;
+unset($funcionarios[0]);
+
+//Puxar funcionario do banco
+$funcionarioNew = new Funcionario(0, "", "", 0, 0);
+$table = $database->select('funcionarios WHERE id = '.$idSave);
+while ($line = pg_fetch_array($table, null, PGSQL_ASSOC)) {
+    foreach ($line as $key => $col_value) {
+        $funcionarioNew->$key = $col_value;
+    }
+}
+
+//Print Novo Funcionario
+print_r($funcionarioNew);
+
+//Adicionar pro Array de Funcionarios
+array_push($funcionarios, $funcionarioNew);
+
+//Delete Funcionario do banco
+if(array_key_exists($key=0, $funcionarios)){
+    $funcionarios[$key]->Delete($database);
+} else {
+    echo "Chave não existe no array \n";
+}
+
+
+//Print Funcionarios
+$database->printDB('funcionarios');
+
+
+
 
