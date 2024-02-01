@@ -32,10 +32,6 @@ class Router
         
             echo json_encode(['message' => 'Invalid method provided.']);
             exit;
-        } else {
-            $controller = new controller();
-            $controller->getAllPokemons($this->getRoute());
-            $controller->getPokemon($this->getRoute());
         }
     }
     

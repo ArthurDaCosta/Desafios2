@@ -4,6 +4,7 @@ require_once __DIR__."/classes/funcionario.php";
 require_once __DIR__."/classes/database.php";
 
 $database = new database();
+$database->connection = $database->makeConnection();
 $database->createTable();
 
 //Criar Funcionarios
@@ -13,11 +14,13 @@ $funcionarios = [
     new funcionario(22, "Funcionario 3", "Masculino", 22, 1000),
     new funcionario(23, "Funcionario 4", "Masculino", 56, 40000)
 ];
+array_multisort($funcionarios, SORT_ASC, SORT_REGULAR);
 
 //Adicionar Funcionarios ao banco
 foreach ($funcionarios as $funcionario) {
     $funcionario->Create($database);
 }
+echo "\n";
 
 //Alterar Funcionarios
 foreach ($funcionarios as $funcionario) {
@@ -28,7 +31,7 @@ foreach ($funcionarios as $funcionario) {
 $database->orderBy('funcionarios', 'id');
 
 //Print Funcionarios
-$database->printDB('funcionarios');
+//$funcionarios[0]->ReadALL($database);
 
 //Unset Funcionario
 $idSave = $funcionarios[0]->id;
@@ -48,6 +51,8 @@ print_r($funcionarioNew);
 
 //Adicionar pro Array de Funcionarios
 array_push($funcionarios, $funcionarioNew);
+array_multisort($funcionarios, SORT_ASC, SORT_REGULAR);
+$funcionarios = array_values($funcionarios);
 
 //Delete Funcionario do banco
 if(array_key_exists($key=0, $funcionarios)){
@@ -56,9 +61,11 @@ if(array_key_exists($key=0, $funcionarios)){
     echo "Chave não existe no array \n";
 }
 
-
 //Print Funcionarios
-$database->printDB('funcionarios');
+//$funcionarios[2]->ReadOne($database, $funcionarios[2]->id);
+
+pg_close($database->connection);
+
 
 
 
