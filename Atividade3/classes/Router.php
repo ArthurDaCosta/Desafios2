@@ -33,10 +33,16 @@ class Router
             echo json_encode(['message' => 'Invalid method provided.']);
             exit;
         } else {
-            $controller = new controller();
-            $controller->getAllPokemons($this->getRoute());
-            $controller->getPokemon($this->getRoute());
-        }
+            header('Content-Type: application/json');
+            if (preg_match('/\/\?page=[0-9]+/', $this->getRoute()) ) {
+                Controller::getAllPokemons();
+                exit;
+            }
+            if (preg_match('/\/pokemon\/.+/', $this->getRoute()) ) {
+                Controller::getPokemon($this->getRoute());
+                exit;
+            }
+        }       
     }
     
     

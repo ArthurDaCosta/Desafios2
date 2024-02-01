@@ -7,7 +7,6 @@ $database = new database();
 $database->connection = $database->makeConnection();
 $database->createTable();
 
-//Criar Funcionarios
 $funcionarios = [ 
     new funcionario(20, "Funcionario 1", "Masculino", 25, 2000),
     new funcionario(21, "Funcionario 2", "Feminino", 28, 6000),
@@ -16,13 +15,11 @@ $funcionarios = [
 ];
 array_multisort($funcionarios, SORT_ASC, SORT_REGULAR);
 
-//Adicionar Funcionarios ao banco
 foreach ($funcionarios as $funcionario) {
     $funcionario->Create($database);
 }
 echo "\n";
 
-//Alterar Funcionarios
 foreach ($funcionarios as $funcionario) {
     $funcionario->nome = "$funcionario->nome alterado";
     $funcionario->AumentarSalario(10);
@@ -30,14 +27,11 @@ foreach ($funcionarios as $funcionario) {
 }
 $database->orderBy('funcionarios', 'id');
 
-//Print Funcionarios
-//$funcionarios[0]->ReadALL($database);
+Funcionario::ReadALL($database);
 
-//Unset Funcionario
 $idSave = $funcionarios[0]->id;
 unset($funcionarios[0]);
 
-//Puxar funcionario do banco
 $funcionarioNew = new Funcionario(0, "", "", 0, 0);
 $table = $database->select('funcionarios WHERE id = '.$idSave);
 while ($line = pg_fetch_array($table, null, PGSQL_ASSOC)) {
@@ -46,23 +40,22 @@ while ($line = pg_fetch_array($table, null, PGSQL_ASSOC)) {
     }
 }
 
-//Print Novo Funcionario
+echo "<br> <h2>Funcionario pego da DB: </h2>";
 print_r($funcionarioNew);
+echo "<br>";
 
-//Adicionar pro Array de Funcionarios
 array_push($funcionarios, $funcionarioNew);
 array_multisort($funcionarios, SORT_ASC, SORT_REGULAR);
 $funcionarios = array_values($funcionarios);
 
-//Delete Funcionario do banco
 if(array_key_exists($key=0, $funcionarios)){
     $funcionarios[$key]->Delete($database);
 } else {
     echo "Chave não existe no array \n";
 }
 
-//Print Funcionarios
-//$funcionarios[2]->ReadOne($database, $funcionarios[2]->id);
+$id = 24;
+Funcionario::ReadOne($database, $id);
 
 pg_close($database->connection);
 

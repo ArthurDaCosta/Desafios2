@@ -21,34 +21,39 @@ class funcionario
     function Create(database $database)
     {
         if (in_array($this->id, (array)pg_fetch_array(pg_query($database->connection, "SELECT * FROM funcionarios WHERE id = $this->id"), null, PGSQL_ASSOC))) {
-            echo "Funcionario de ID=$this->id já existe no banco de dados. \n";
+            echo "Funcionario de ID=$this->id já existe no banco de dados. <br>";
         } else {
             pg_insert($database->connection, 'funcionarios', (array) $this);
             $database->orderBy('funcionarios', 'id');
         }
     }
 
-    function ReadAll(database $database)
+    static function ReadAll(database $database)
     {
-        echo "\n<Funcionários>";
-        while ($line = pg_fetch_array($database->select('funcionarios'), null, PGSQL_ASSOC)) {
-            echo "\t\n";
+        $table = $database->select('funcionarios');
+        echo "<br> <h2>Funcionários:</h2>";
+        while ($line = pg_fetch_array($table, null, PGSQL_ASSOC)) {
             foreach ($line as $key => $col_value) {
-                echo "\t\t $key = $col_value\n";
+                echo "<br> $key = $col_value";
             }
-            echo "\t\n";
+            echo "<br>";
         }
     }
 
-    function ReadOne(database $database, $id)
+    static function ReadOne(database $database, $id)
     {
-        while ($line = pg_fetch_array($database->select("funcionarios WHERE id = $id"), null, PGSQL_ASSOC)) {
-            echo "\n<Funcionário>";
-            echo "\t\n";
-            foreach ($line as $key => $col_value) {
-                echo "\t\t $key = $col_value\n";
+        echo "<br> <h2>Funcionario de ID=$id: </h2>";
+        if (in_array($id, (array)pg_fetch_array(pg_query($database->connection, "SELECT * FROM funcionarios WHERE id = $id"), null, PGSQL_ASSOC)))
+        {
+            $table = $database->select("funcionarios WHERE id = $id");
+            while ($line = pg_fetch_array($table, null, PGSQL_ASSOC)) {
+                foreach ($line as $key => $col_value) {
+                    echo "<br> $key = $col_value";
+                }
+                echo "<br>";
             }
-            echo "\t\n";
+        } else {
+            echo "<br> Funcionario de ID=$id não existe no banco de dados.";
         }
     }
 
@@ -63,12 +68,12 @@ class funcionario
         if(in_array($this->id, (array)pg_fetch_array(pg_query($database->connection, "SELECT * FROM funcionarios WHERE id = $this->id"), null, PGSQL_ASSOC))){
             pg_delete($database->connection, 'funcionarios', ['id' => $this->id]);
         } else {
-            echo "Funcionario de ID=$this->id não existe no banco de dados \n";
+            echo "<br> Funcionario de ID=$this->id não existe no banco de dados \n";
         }
         
     }
 
-    function AumentarSalario($porcentagem)
+    function AumentarSalario(float $porcentagem)
     {
         $this->salario += $this->salario * ($porcentagem / 100);
     }

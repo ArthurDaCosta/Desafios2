@@ -2,7 +2,7 @@
 
 class RequestAPI
 {
-    function request(string $url, string $endpoint)
+    static function request(string $url, string $endpoint)
     {
         $ch = curl_init("$url$endpoint");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

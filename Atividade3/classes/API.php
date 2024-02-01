@@ -27,9 +27,7 @@ class API
 
     function getInfo(): array
     {
-        $request = new RequestAPI();
-        $response = $request->request($this->getUrl(), $this->getEndpoint());
-
+        $response = RequestAPI::request($this->url, $this->endpoint);
         $decoded = json_decode($response, true);
 
         if (!$decoded) {

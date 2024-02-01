@@ -6,7 +6,7 @@ class database
 
     function makeConnection()
     {
-        $database = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
+        $database = pg_connect("host=postgres port=5432 dbname=postgres user=exemplo password=exemplo")
                 or die ("Could not connect.\n");
         return $database;
     }
