@@ -1,49 +1,44 @@
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require_once 'vendor/autoload.php';
 require_once "createOrders.php";
 require_once "createProducts.php";
-require_once __DIR__ ."/classes/order.php";
-require_once __DIR__ ."/classes/product.php";
-require_once __DIR__ ."/classes/report.php";
+require_once "classes/order.php";
+require_once "classes/product.php";
+require_once "classes/report.php";
 
 
 
 $orders = createOrders();
 $products = createProducts();
 
-$count=0;
-foreach ($products as $product)
-{   
 
-    $report[$count] = new Report;
-    $report[$count]->id = $product->getId(); 
-    $report[$count]->priceUnit = $product->getPrice();
+foreach ($products as $key=>$product)
+{   
+    $report[$key] = new Report;
+    $report[$key]->id = $product->getId(); 
+    $report[$key]->priceUnit = $product->getPrice();
 
     foreach ($orders as $order)
     {
-        if($order->getProductId() == $report[$count]->id)
+        if($order->getProductId() == $report[$key]->id)
         {
-            if(strtotime($order->getDate()) >= strtotime($report[$count]->lastSale))
+            if(strtotime($order->getDate()) >= strtotime($report[$key]->lastSale))
             {
-                $report[$count]->lastSale = $order->getDate();
+                $report[$key]->lastSale = $order->getDate();
             }
 
-            $report[$count]->totalQuant += $order->getQuantity();
+            $report[$key]->totalQuant += $order->getQuantity();
         }
 
     }
-    $report[$count]->total = $report[$count]->totalQuant * $report[$count]->priceUnit;
-
-
-    $count++;
+    $report[$key]->total = $report[$key]->totalQuant * $report[$key]->priceUnit;
 }
 
-$reportCSV=fopen("report.csv", "w");
+$reportCSV=fopen("csv/report.csv", "w");
 fputcsv($reportCSV, ["ID do produto", "preço unitário", "data da última venda", "quantidade total vendida", "valor total vendido"]);
 fputcsv($reportCSV, []);
 foreach ($report as $linha)
@@ -65,7 +60,7 @@ try {
     $email->Subject   = 'Desafio 2 - Atividade 1';
     $email->Body   = 'Arquivo CSV em anexo.';
     $email->AddAddress( 'AddAddress@example.com' );
-    $email->AddAttachment( __DIR__."/report.csv");
+    $email->AddAttachment( "csv/report.csv");
 
     $email->Send();
     echo "\n";

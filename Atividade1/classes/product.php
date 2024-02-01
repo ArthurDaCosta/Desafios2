@@ -2,24 +2,25 @@
 
 class Product 
 {
-    private $id;
-    private $name;
-    private $price;
+    private string $id;
+    private string $name;
+    private float $price;
 
-    function setId($id)
+    function setId(string $id)
     {
         $this->id = $id;
     }
 
-    function setPrice($price)
+    function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
+    function setPrice(float $price)
     {
         $this->price = $price;
     }
 
-    function setName($name)
-    {
-        $this->name = $name;
-    }
 
     function getId()
     {

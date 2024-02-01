@@ -2,33 +2,33 @@
 
 class Report
 {
-    public $id;
-    public $priceUnit = 0;
-    public $lastSale = 'not sold';
-    public $totalQuant = 0;
-    public $total = 0;
+    public string $id;
+    public float $priceUnit = 0;
+    public string $lastSale = 'not sold';
+    public int $totalQuant = 0;
+    public float $total = 0;
 
-    function setId($id)
+    function setId(string $id)
     {
         $this->id = $id;
     }
 
-    function setPriceUnit($priceUnit)
+    function setPriceUnit(float $priceUnit)
     {
         $this->priceUnit = $priceUnit;
     }
 
-    function setLastSale($lastSale)
+    function setLastSale(string $lastSale)
     {
         $this->lastSale = $lastSale;
     }
 
-    function setTotalQuant($totalQuant)
+    function setTotalQuant(int $totalQuant)
     {
         $this->totalQuant = $totalQuant;
     }
 
-    function setTotal($total)
+    function setTotal(float $total)
     {
         $this->total = $total;
     }

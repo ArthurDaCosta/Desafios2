@@ -2,7 +2,7 @@
 
 function createOrders(): array
 {
-    $ordersCSV = fopen("orders.csv", "r");
+    $ordersCSV = fopen(__DIR__."/csv/orders.csv", "r");
 
     $count=0;
     while (($orders = fgetcsv($ordersCSV, 1000, ",")) !== FALSE) {

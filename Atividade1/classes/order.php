@@ -2,27 +2,27 @@
 
 class Order
 {
-    private $orderId;
-    private $productId;
-    private $date;
-    private $quantity;
+    private string $orderId;
+    private string $productId;
+    private string $date;
+    private int $quantity;
 
-    function setOrderId($orderId)
+    function setOrderId(string $orderId)
     {
         $this->orderId = $orderId;
     }
 
-    function setProductId($productId)
+    function setProductId(string $productId)
     {
         $this->productId = $productId;
     }
 
-    function setDate($date)
+    function setDate(string $date)
     {
         $this->date = $date;
     }
 
-    function setQuantity($quantity)
+    function setQuantity(int $quantity)
     {
         $this->quantity = $quantity;
     }

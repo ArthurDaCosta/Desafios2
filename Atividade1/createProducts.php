@@ -2,7 +2,7 @@
 
 function createProducts(): array
 {
-    $productsCSV = fopen("products.csv", "r");
+    $productsCSV = fopen(__DIR__."/csv/products.csv", "r");
 
     $count=0;
     while (($products = fgetcsv($productsCSV, 1000, ",")) !== FALSE) {
