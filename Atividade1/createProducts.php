@@ -7,11 +7,11 @@ function createProducts(): array
     $count=0;
     while (($products = fgetcsv($productsCSV, null, ",")) !== FALSE) {
         
-        $newOrderClass = new Product;
-        $newOrderClass->setId($products[0]);
-        $newOrderClass->setName($products[1]);
-        $newOrderClass->setPrice($products[2]);
-        $productsArray[$count] = $newOrderClass;
+        $newProductClass = new Product;
+        $newProductClass->setId($products[0]);
+        $newProductClass->setName($products[1]);
+        $newProductClass->setPrice($products[2]);
+        $productsArray[$count] = $newProductClass;
 
         $count++;
     }

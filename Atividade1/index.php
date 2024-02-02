@@ -6,9 +6,9 @@ use PHPMailer\PHPMailer\Exception;
 require_once 'vendor/autoload.php';
 require_once "createOrders.php";
 require_once "createProducts.php";
-require_once "classes/order.php";
-require_once "classes/product.php";
-require_once "classes/report.php";
+require_once "classes/Order.php";
+require_once "classes/Product.php";
+require_once "classes/Report.php";
 
 
 
