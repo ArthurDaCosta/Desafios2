@@ -20,6 +20,4 @@ services:
       POSTGRES_PASSWORD: exemplo
     ports:
       - "3600:5432"
-    
-#docker compose up -d  docker compose stop e docker compose down
 

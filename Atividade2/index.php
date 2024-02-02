@@ -1,17 +1,17 @@
 <?php
 
-require_once __DIR__ . "/classes/funcionario.php";
-require_once __DIR__ . "/classes/database.php";
+require_once __DIR__ . "/classes/Funcionario.php";
+require_once __DIR__ . "/classes/Database.php";
 
-$database = new database();
+$database = new Database();
 $database->connection = $database->makeConnection();
 $database->createTable();
 
 $funcionarios = [
-    new funcionario(20, "Funcionario 1", "Masculino", 25, 2000),
-    new funcionario(21, "Funcionario 2", "Feminino", 28, 6000),
-    new funcionario(22, "Funcionario 3", "Masculino", 22, 1000),
-    new funcionario(23, "Funcionario 4", "Masculino", 56, 40000)
+    new Funcionario(20, "Funcionario 1", "Masculino", 25, 2000),
+    new Funcionario(21, "Funcionario 2", "Feminino", 28, 6000),
+    new Funcionario(22, "Funcionario 3", "Masculino", 22, 1000),
+    new Funcionario(23, "Funcionario 4", "Masculino", 56, 40000)
 ];
 array_multisort($funcionarios, SORT_ASC, SORT_REGULAR);
 
