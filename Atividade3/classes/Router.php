@@ -27,6 +27,7 @@ class Router
 
     function verifyMethod()
     {
+        http_response_code(200);
         if ($this->getMethod() !== 'GET') {
             http_response_code(400);
         
