@@ -4,7 +4,7 @@ class Product
 {
     private string $id;
     private string $name;
-    private float $price;
+    private string $price;
 
     function setId(string $id)
     {
@@ -16,7 +16,7 @@ class Product
         $this->name = $name;
     }
 
-    function setPrice(float $price)
+    function setPrice(string $price)
     {
         $this->price = $price;
     }

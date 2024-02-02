@@ -20,7 +20,7 @@ foreach ($products as $key=>$product)
 {   
     $report[$key] = new Report;
     $report[$key]->id = $product->getId(); 
-    $report[$key]->priceUnit = $product->getPrice();
+    $report[$key]->priceUnit = (float) $product->getPrice();
 
     foreach ($orders as $order)
     {
@@ -31,7 +31,7 @@ foreach ($products as $key=>$product)
                 $report[$key]->lastSale = $order->getDate();
             }
 
-            $report[$key]->totalQuant += $order->getQuantity();
+            $report[$key]->totalQuant += (int) $order->getQuantity();
         }
 
     }

@@ -5,7 +5,7 @@ class Order
     private string $orderId;
     private string $productId;
     private string $date;
-    private int $quantity;
+    private string $quantity;
 
     function setOrderId(string $orderId)
     {
@@ -22,7 +22,7 @@ class Order
         $this->date = $date;
     }
 
-    function setQuantity(int $quantity)
+    function setQuantity(string $quantity)
     {
         $this->quantity = $quantity;
     }
